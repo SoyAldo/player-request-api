@@ -8,6 +8,7 @@ import java.util.UUID;
 public class Requests {
 
     private JavaPlugin javaPlugin;
+    private PlayerRequestManager playerRequestManager;
     private final UUID uuid;
     private final HashMap<UUID, Request> requestsSubmitted;
     private final HashMap<UUID, Request> requestsReceived;
@@ -35,6 +36,18 @@ public class Requests {
 
     }
 
+    public PlayerRequestManager getPlayerRequestManager() {
+
+        return playerRequestManager;
+
+    }
+
+    public void setPlayerRequestManager(PlayerRequestManager playerRequestManager) {
+
+        this.playerRequestManager = playerRequestManager;
+
+    }
+
     public UUID getUuid() {
 
         return uuid;
@@ -50,12 +63,6 @@ public class Requests {
     public HashMap<UUID, Request> getRequestsReceived() {
 
         return requestsReceived;
-
-    }
-
-
-    public void addRequestsSubmit(Request request) {
-
 
     }
 
