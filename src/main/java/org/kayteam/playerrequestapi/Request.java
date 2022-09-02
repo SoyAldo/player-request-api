@@ -12,6 +12,7 @@ import java.util.UUID;
 public abstract class Request {
 
     private JavaPlugin javaPlugin;
+    private PlayerRequestManager playerRequestManager;
     private final UUID sender;
     private final UUID receiver;
 
@@ -35,6 +36,18 @@ public abstract class Request {
 
     }
 
+    public PlayerRequestManager getPlayerRequestManager() {
+
+        return playerRequestManager;
+
+    }
+
+    public void setPlayerRequestManager(PlayerRequestManager playerRequestManager) {
+
+        this.playerRequestManager = playerRequestManager;
+
+    }
+
     public UUID getSender() {
 
         return sender;
@@ -44,6 +57,10 @@ public abstract class Request {
     public UUID getReceiver() {
 
         return receiver;
+
+    }
+
+    public void executeRequest() {
 
     }
 
@@ -59,7 +76,7 @@ public abstract class Request {
 
         if ( playerRequestAcceptEvent.isCancelled() ) return;
 
-        onRequestAcceptAction();
+        onRequestAcceptActions();
 
     }
 
@@ -75,12 +92,20 @@ public abstract class Request {
 
         if ( playerRequestRejectedEvent.isCancelled() ) return;
 
-        onRequestRejectAction();
+        onRequestRejectActions();
 
     }
 
-    public abstract void onRequestAcceptAction();
+    public void expireRequest() {
 
-    public abstract void onRequestRejectAction();
+    }
+
+    public abstract void onExecuteActions();
+
+    public abstract void onRequestAcceptActions();
+
+    public abstract void onRequestRejectActions();
+
+    public abstract void onRequestExpireActions();
 
 }
