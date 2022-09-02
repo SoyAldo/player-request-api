@@ -12,14 +12,14 @@ import java.util.UUID;
 public abstract class Request {
 
     private JavaPlugin javaPlugin;
-    private final UUID uuid;
-    private final UUID author;
+    private final UUID sender;
+    private final UUID receiver;
 
-    public Request(UUID author) {
+    public Request(UUID sender, UUID receiver) {
 
-        this.uuid = UUID.randomUUID();
+        this.sender = sender;
 
-        this.author = author;
+        this.receiver = receiver;
 
     }
 
@@ -35,15 +35,15 @@ public abstract class Request {
 
     }
 
-    public UUID getUuid() {
+    public UUID getSender() {
 
-        return uuid;
+        return sender;
 
     }
 
-    public UUID getAuthor() {
+    public UUID getReceiver() {
 
-        return author;
+        return receiver;
 
     }
 

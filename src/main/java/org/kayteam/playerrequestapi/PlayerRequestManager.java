@@ -44,6 +44,10 @@ public class PlayerRequestManager {
 
     public void addRequests(UUID uuid) {
 
+        Requests r = new Requests(uuid);
+
+        r.setJavaPlugin(javaPlugin);
+
         requests.put(uuid, new Requests(uuid));
 
     }
