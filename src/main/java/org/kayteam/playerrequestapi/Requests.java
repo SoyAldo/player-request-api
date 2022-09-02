@@ -9,14 +9,11 @@ public class Requests {
 
     private JavaPlugin javaPlugin;
     private PlayerRequestManager playerRequestManager;
-    private final UUID uuid;
     private final HashMap<UUID, Request> requestsSubmitted;
     private final HashMap<UUID, Request> requestsReceived;
 
 
-    public Requests(UUID uuid) {
-
-        this.uuid = uuid;
+    public Requests() {
 
         requestsSubmitted = new HashMap<>();
 
@@ -45,12 +42,6 @@ public class Requests {
     public void setPlayerRequestManager(PlayerRequestManager playerRequestManager) {
 
         this.playerRequestManager = playerRequestManager;
-
-    }
-
-    public UUID getUuid() {
-
-        return uuid;
 
     }
 
