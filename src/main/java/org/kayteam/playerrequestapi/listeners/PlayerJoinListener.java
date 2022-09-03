@@ -13,16 +13,19 @@ public class PlayerJoinListener implements Listener {
     private final PlayerRequestManager playerRequestManager;
 
     public PlayerJoinListener(PlayerRequestManager playerRequestManager) {
+
         this.playerRequestManager = playerRequestManager;
+
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
 
+        // Get Player
         Player player = event.getPlayer();
-
+        // Getting the Player UUID
         UUID uuid = player.getUniqueId();
-
+        // Adding Requests to PlayerRequestManager
         playerRequestManager.addRequests(uuid);
 
     }
