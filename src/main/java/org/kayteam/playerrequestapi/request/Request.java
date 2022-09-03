@@ -14,14 +14,32 @@ public abstract class Request {
 
     private JavaPlugin javaPlugin;
     private PlayerRequestManager playerRequestManager;
+    private RequestStatus requestStatus;
     private final UUID sender;
     private final UUID receiver;
+    private final int duration;
 
     public Request(UUID sender, UUID receiver) {
+
+        requestStatus = RequestStatus.PENDING;
 
         this.sender = sender;
 
         this.receiver = receiver;
+
+        duration = 30;
+
+    }
+
+    public Request(UUID sender, UUID receiver, int duration) {
+
+        requestStatus = RequestStatus.PENDING;
+
+        this.sender = sender;
+
+        this.receiver = receiver;
+
+        this.duration = duration;
 
     }
 
@@ -49,6 +67,18 @@ public abstract class Request {
 
     }
 
+    public RequestStatus getRequestStatus() {
+
+        return requestStatus;
+
+    }
+
+    public void setRequestStatus(RequestStatus requestStatus) {
+
+        this.requestStatus = requestStatus;
+
+    }
+
     public UUID getSender() {
 
         return sender;
@@ -58,6 +88,12 @@ public abstract class Request {
     public UUID getReceiver() {
 
         return receiver;
+
+    }
+
+    public int getDuration() {
+
+        return duration;
 
     }
 
