@@ -1,20 +1,22 @@
 package org.kayteam.playerrequestapi.events;
 
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.kayteam.playerrequestapi.request.Request;
+
+import java.util.UUID;
 
 public class PlayerRequestAcceptEvent extends Event implements Cancellable {
 
     private final static HandlerList handlerList = new HandlerList();
     private boolean cancel = false;
-    private final Player player;
     private final Request request;
 
-    public PlayerRequestAcceptEvent(Player player, Request request) {
-        this.player = player;
+    public PlayerRequestAcceptEvent(Request request) {
         this.request = request;
     }
 
@@ -45,15 +47,33 @@ public class PlayerRequestAcceptEvent extends Event implements Cancellable {
 
     }
 
-    public Player getPlayer() {
-
-        return player;
-
-    }
-
     public Request getRequest() {
 
         return request;
+
+    }
+
+    public Player getSender() {
+
+        JavaPlugin javaPlugin = request.getJavaPlugin();
+
+        Server server = javaPlugin.getServer();
+
+        UUID uuid = request.getSender();
+
+        return server.getPlayer(uuid);
+
+    }
+
+    public Player getReceiver() {
+
+        JavaPlugin javaPlugin = request.getJavaPlugin();
+
+        Server server = javaPlugin.getServer();
+
+        UUID uuid = request.getReceiver();
+
+        return server.getPlayer(uuid);
 
     }
 
