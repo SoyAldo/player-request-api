@@ -113,7 +113,9 @@ public abstract class Request {
 
         pluginManager.callEvent(playerRequestAcceptEvent);
 
-        if ( playerRequestAcceptEvent.isCancelled() ) return;
+        if ( playerRequestAcceptEvent.isCancelled() )   return;
+
+        requestStatus = RequestStatus.ACCEPTED;
 
         Requests senderRequests = playerRequestManager.getRequests(sender);
 
@@ -138,6 +140,8 @@ public abstract class Request {
         pluginManager.callEvent(playerRequestRejectedEvent);
 
         if ( playerRequestRejectedEvent.isCancelled() )   return;
+
+        requestStatus = RequestStatus.REJECTED;
 
         Requests senderRequests = playerRequestManager.getRequests(sender);
 
