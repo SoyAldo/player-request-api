@@ -4,8 +4,6 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitScheduler;
-import org.bukkit.scheduler.BukkitTask;
 import org.kayteam.playerrequestapi.events.PlayerRequestSendEvent;
 import org.kayteam.playerrequestapi.listeners.*;
 import org.kayteam.playerrequestapi.request.*;
@@ -19,8 +17,11 @@ public class PlayerRequestManager {
     private final HashMap<UUID, Requests> requests;
 
     public PlayerRequestManager(JavaPlugin javaPlugin) {
+
         this.javaPlugin = javaPlugin;
+
         requests = new HashMap<>();
+
     }
 
     public JavaPlugin getJavaPlugin() {
