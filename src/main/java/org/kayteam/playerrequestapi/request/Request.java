@@ -69,7 +69,7 @@ public abstract class Request {
 
     public void acceptRequest(Player player) {
 
-        PlayerRequestAcceptEvent playerRequestAcceptEvent = new PlayerRequestAcceptEvent(player, this);
+        PlayerRequestAcceptEvent playerRequestAcceptEvent = new PlayerRequestAcceptEvent(this);
 
         Server server = javaPlugin.getServer();
 
@@ -93,7 +93,7 @@ public abstract class Request {
 
     public void rejectRequest(Player player) {
 
-        PlayerRequestRejectedEvent playerRequestRejectedEvent = new PlayerRequestRejectedEvent(player, this);
+        PlayerRequestRejectedEvent playerRequestRejectedEvent = new PlayerRequestRejectedEvent(this);
 
         Server server = javaPlugin.getServer();
 
