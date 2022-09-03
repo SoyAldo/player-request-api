@@ -1,6 +1,7 @@
 package org.kayteam.playerrequestapi;
 
 import org.bukkit.Server;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -36,6 +37,8 @@ public class PlayerRequestManager {
         pluginManager.registerEvents(new PlayerJoinListener(this), javaPlugin);
 
         pluginManager.registerEvents(new PlayerQuitListener(this), javaPlugin);
+
+        for ( Player player:server.getOnlinePlayers() )   addRequests(player.getUniqueId());
 
     }
 
