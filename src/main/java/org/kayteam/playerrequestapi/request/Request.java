@@ -4,6 +4,8 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.scheduler.BukkitTask;
 import org.kayteam.playerrequestapi.PlayerRequestManager;
 import org.kayteam.playerrequestapi.events.PlayerRequestAcceptEvent;
 import org.kayteam.playerrequestapi.events.PlayerRequestRejectedEvent;
@@ -13,11 +15,12 @@ import java.util.UUID;
 public abstract class Request {
 
     private JavaPlugin javaPlugin;
+    private BukkitTask bukkitTask;
     private PlayerRequestManager playerRequestManager;
     private RequestStatus requestStatus;
     private final UUID sender;
     private final UUID receiver;
-    private final int duration;
+    private int duration;
 
     public Request(UUID sender, UUID receiver) {
 
@@ -97,7 +100,34 @@ public abstract class Request {
 
     }
 
+    public void setDuration(int duration) {
+
+        this.duration = duration;
+
+    }
+
     public void executeRequest() {
+
+        // Get Server
+        Server server = javaPlugin.getServer();
+        // Get BukkitScheduler
+        BukkitScheduler bukkitScheduler = server.getScheduler();
+        // Running Scheduler
+        bukkitTask = bukkitScheduler.runTaskTimer(javaPlugin, () -> {
+
+            if ( getDuration() == 0 ) {
+
+                bukkitScheduler.cancelTask(bukkitTask.getTaskId());
+
+                if ( requestStatus.equals(RequestStatus.PENDING) )   expireRequest();
+
+            }
+
+            if ( !requestStatus.equals(RequestStatus.PENDING) )   bukkitScheduler.cancelTask(bukkitTask.getTaskId());
+
+            duration = duration - 1;
+
+        }, 0L, 20L);
 
         onExecuteActions();
 
