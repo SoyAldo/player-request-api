@@ -103,7 +103,7 @@ public abstract class Request {
 
     }
 
-    public void acceptRequest(Player player) {
+    public void acceptRequest() {
 
         PlayerRequestAcceptEvent playerRequestAcceptEvent = new PlayerRequestAcceptEvent(this);
 
@@ -127,7 +127,7 @@ public abstract class Request {
 
     }
 
-    public void rejectRequest(Player player) {
+    public void rejectRequest() {
 
         PlayerRequestRejectedEvent playerRequestRejectedEvent = new PlayerRequestRejectedEvent(this);
 
