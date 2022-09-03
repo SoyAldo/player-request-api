@@ -1,7 +1,6 @@
 package org.kayteam.playerrequestapi.request;
 
 import org.bukkit.Server;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -15,8 +14,8 @@ import java.util.UUID;
 public abstract class Request {
 
     private JavaPlugin javaPlugin;
-    private BukkitTask bukkitTask;
     private PlayerRequestManager playerRequestManager;
+    private BukkitTask bukkitTask;
     private RequestStatus requestStatus;
     private final UUID sender;
     private final UUID receiver;
@@ -117,15 +116,15 @@ public abstract class Request {
 
             if ( getDuration() == 0 ) {
 
-                bukkitScheduler.cancelTask(bukkitTask.getTaskId());
-
                 if ( requestStatus.equals(RequestStatus.PENDING) )   expireRequest();
+
+                bukkitScheduler.cancelTask(bukkitTask.getTaskId());
 
             }
 
             if ( !requestStatus.equals(RequestStatus.PENDING) )   bukkitScheduler.cancelTask(bukkitTask.getTaskId());
 
-            duration = duration - 1;
+            duration--;
 
         }, 0L, 20L);
 
@@ -135,11 +134,11 @@ public abstract class Request {
 
     public void acceptRequest() {
 
-        PlayerRequestAcceptEvent playerRequestAcceptEvent = new PlayerRequestAcceptEvent(this);
-
         Server server = javaPlugin.getServer();
 
         PluginManager pluginManager = server.getPluginManager();
+
+        PlayerRequestAcceptEvent playerRequestAcceptEvent = new PlayerRequestAcceptEvent(this);
 
         pluginManager.callEvent(playerRequestAcceptEvent);
 
@@ -161,11 +160,11 @@ public abstract class Request {
 
     public void rejectRequest() {
 
-        PlayerRequestRejectedEvent playerRequestRejectedEvent = new PlayerRequestRejectedEvent(this);
-
         Server server = javaPlugin.getServer();
 
         PluginManager pluginManager = server.getPluginManager();
+
+        PlayerRequestRejectedEvent playerRequestRejectedEvent = new PlayerRequestRejectedEvent(this);
 
         pluginManager.callEvent(playerRequestRejectedEvent);
 
