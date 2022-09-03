@@ -3,6 +3,7 @@ package org.kayteam.playerrequestapi;
 import org.bukkit.Server;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.kayteam.playerrequestapi.events.PlayerRequestSendEvent;
 import org.kayteam.playerrequestapi.listeners.*;
 import org.kayteam.playerrequestapi.request.*;
@@ -104,6 +105,14 @@ public class PlayerRequestManager {
         receiverRequests.getRequestsReceived().put(sender,request);
         // Execute request
         request.executeRequest();
+        // Get BukkitScheduler
+        BukkitScheduler bukkitScheduler = server.getScheduler();
+        // Running Scheduler
+        bukkitScheduler.runTaskLater(javaPlugin, () -> {
+
+            if ( request.getRequestStatus().equals(RequestStatus.PENDING) )   request.expireRequest();
+
+        }, request.getDuration() * 20L);
 
     }
 
