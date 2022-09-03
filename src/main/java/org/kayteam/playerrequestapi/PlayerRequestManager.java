@@ -3,6 +3,7 @@ package org.kayteam.playerrequestapi;
 import org.bukkit.Server;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.kayteam.playerrequestapi.events.PlayerRequestSendEvent;
 import org.kayteam.playerrequestapi.listeners.*;
 
 import java.util.HashMap;
@@ -44,11 +45,13 @@ public class PlayerRequestManager {
 
     public void addRequests(UUID uuid) {
 
-        Requests r = new Requests(uuid);
+        Requests r = new Requests();
 
         r.setJavaPlugin(javaPlugin);
 
-        requests.put(uuid, new Requests(uuid));
+        r.setPlayerRequestManager(this);
+
+        requests.put(uuid, r);
 
     }
 
@@ -67,6 +70,39 @@ public class PlayerRequestManager {
     public Requests getRequests(UUID uuid) {
 
         return requests.get(uuid);
+
+    }
+
+    public void executeRequest(Request request) {
+
+        // Set JavaPlugin
+        request.setJavaPlugin(javaPlugin);
+        // Set PlayerRequestManager
+        request.setPlayerRequestManager(this);
+        // Get Server
+        Server server = javaPlugin.getServer();
+        // Get PluginManager
+        PluginManager pluginManager = server.getPluginManager();
+        // Create PlayerRequestSendEvent event
+        PlayerRequestSendEvent playerRequestSendEvent = new PlayerRequestSendEvent(request);
+        // Calling to the PlayerRequestSendEvent event
+        pluginManager.callEvent(playerRequestSendEvent);
+        // Return if the PlayerRequestSendEvent event is cancelled
+        if ( playerRequestSendEvent.isCancelled() )   return;
+        // Get sender UUID
+        UUID sender = request.getSender();
+        // Get receiver UUID
+        UUID receiver = request.getReceiver();
+        // Get sender Requests
+        Requests senderRequests = requests.get(sender);
+        // Add request to sender Requests
+        senderRequests.getRequestsSubmitted().put(receiver, request);
+        // Get receiver Requests
+        Requests receiverRequests = requests.get(receiver);
+        // Add request to receiver Requests
+        receiverRequests.getRequestsReceived().put(sender,request);
+        // Execute request
+        request.executeRequest();
 
     }
 
