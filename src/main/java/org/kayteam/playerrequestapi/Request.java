@@ -62,6 +62,8 @@ public abstract class Request {
 
     public void executeRequest() {
 
+        onExecuteActions();
+
     }
 
     public void acceptRequest(Player player) {
@@ -90,13 +92,23 @@ public abstract class Request {
 
         pluginManager.callEvent(playerRequestRejectedEvent);
 
-        if ( playerRequestRejectedEvent.isCancelled() ) return;
+        if ( playerRequestRejectedEvent.isCancelled() )   return;
 
         onRequestRejectActions();
 
     }
 
     public void expireRequest() {
+
+        Requests senderRequests = playerRequestManager.getRequests(sender);
+
+        if ( senderRequests != null )   senderRequests.getRequestsSubmitted().remove(receiver);
+
+        Requests receiverRequests = playerRequestManager.getRequests(receiver);
+
+        if ( receiverRequests != null )   receiverRequests.getRequestsReceived().remove(sender);
+
+        onRequestExpireActions();
 
     }
 
