@@ -2,7 +2,6 @@ package org.kayteam.playerrequestapi.request;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.kayteam.playerrequestapi.PlayerRequestManager;
-import org.kayteam.playerrequestapi.request.Request;
 
 import java.util.HashMap;
 import java.util.UUID;
