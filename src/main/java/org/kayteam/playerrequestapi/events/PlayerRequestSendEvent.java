@@ -6,7 +6,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.kayteam.playerrequestapi.Request;
+import org.kayteam.playerrequestapi.request.Request;
 
 import java.util.UUID;
 

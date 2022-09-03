@@ -1,9 +1,10 @@
-package org.kayteam.playerrequestapi;
+package org.kayteam.playerrequestapi.request;
 
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.kayteam.playerrequestapi.PlayerRequestManager;
 import org.kayteam.playerrequestapi.events.PlayerRequestAcceptEvent;
 import org.kayteam.playerrequestapi.events.PlayerRequestRejectedEvent;
 
@@ -78,6 +79,14 @@ public abstract class Request {
 
         if ( playerRequestAcceptEvent.isCancelled() ) return;
 
+        Requests senderRequests = playerRequestManager.getRequests(sender);
+
+        if ( senderRequests != null )   senderRequests.getRequestsSubmitted().remove(receiver);
+
+        Requests receiverRequests = playerRequestManager.getRequests(receiver);
+
+        if ( receiverRequests != null )   receiverRequests.getRequestsReceived().remove(sender);
+
         onRequestAcceptActions();
 
     }
@@ -93,6 +102,14 @@ public abstract class Request {
         pluginManager.callEvent(playerRequestRejectedEvent);
 
         if ( playerRequestRejectedEvent.isCancelled() )   return;
+
+        Requests senderRequests = playerRequestManager.getRequests(sender);
+
+        if ( senderRequests != null )   senderRequests.getRequestsSubmitted().remove(receiver);
+
+        Requests receiverRequests = playerRequestManager.getRequests(receiver);
+
+        if ( receiverRequests != null )   receiverRequests.getRequestsReceived().remove(sender);
 
         onRequestRejectActions();
 

@@ -5,6 +5,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.kayteam.playerrequestapi.events.PlayerRequestSendEvent;
 import org.kayteam.playerrequestapi.listeners.*;
+import org.kayteam.playerrequestapi.request.*;
 
 import java.util.HashMap;
 import java.util.UUID;

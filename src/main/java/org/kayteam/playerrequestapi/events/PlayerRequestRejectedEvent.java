@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.kayteam.playerrequestapi.Request;
+import org.kayteam.playerrequestapi.request.Request;
 
 public class PlayerRequestRejectedEvent extends Event implements Cancellable {
 
